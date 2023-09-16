@@ -24,6 +24,9 @@ const Deposit = {
   },
   'Battle':{
     'message': ''
+  },
+  'Land':{
+    'message':''
   }
 }
 

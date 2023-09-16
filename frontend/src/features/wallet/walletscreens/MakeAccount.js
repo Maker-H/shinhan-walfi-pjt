@@ -11,11 +11,11 @@ import BaseballAccount from '../../../assets/wallet/BaseballAccount.png';
 import LevelupAccount from '../../../assets/wallet/LevelupAccount.png'
 import TopTenAccount from '../../../assets/wallet/TopTenAccount.png'
 import BattleAccount from '../../../assets/wallet/BattleAccount.png';
+import LandAccount from '../../../assets/wallet/LandAccount.png';
 
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {Background} from '../walletcomponents/CommonStyle';
 import GoFight from '../walletcomponents/GoFight';
-import { CardInfo } from '../walletcomponents/walletcards/CardInfo';
 
 import { SCREEN_HEIGHT,SCREEN_WIDTH } from '../walletcomponents/ScreenSize';
 import axios from '../../../common/http-common';
@@ -37,8 +37,10 @@ export default function MakeAccount({ navigation }){
       }else if(type==='Battle'){
         response = await axios.post(`battle/getbattlecount?userId=${userId}`)
         console.log(response)
+      }else if(type==='Land'){
+        response = await axios.post(`branch/getmanagernum`,data)
       }else{
-        return ;
+        return;
       }
       navigation.navigate('MakeDeposit',{type, data:response.data.data})
     }catch(err){
@@ -61,6 +63,9 @@ export default function MakeAccount({ navigation }){
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>onPress('Battle')}>
           <Image source={BattleAccount} style={{width:SCREEN_WIDTH*0.9, height:SCREEN_HEIGHT*0.25, resizeMode:'contain'}}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>onPress('Land')}>
+          <Image source={LandAccount} style={{width:SCREEN_WIDTH*0.9, height:SCREEN_HEIGHT*0.25, resizeMode:'contain'}}/>
         </TouchableOpacity>
         <View style={{width:'90%',}}>
           <Text style={{fontSize:RFPercentage(3), fontWeight:'bold'}}>적금</Text>
