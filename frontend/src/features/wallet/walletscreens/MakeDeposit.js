@@ -21,6 +21,9 @@ const Deposit = {
   },
   'Top10':{
     'message': '랭킹 + '
+  },
+  'Battle':{
+    'message': ''
   }
 }
 
@@ -66,6 +69,7 @@ export default function MakeDetail({route,navigation}){
     const response = axios.post('product/create', data)
     .then(res=>navigation.navigate('WalletHome'));
   }
+
   return(
     <View style={{...Background.background, padding:'10%', justifyContent:'none'}}>
       <View style={styles.titleContent}>
