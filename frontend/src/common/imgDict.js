@@ -71,6 +71,7 @@ import baby_panda from '../assets/animal/baby_panda.png'
 import baby_quokka from '../assets/animal/baby_quokka.png'
 import baby_shiba from '../assets/animal/baby_shiba.png'
 import baby_tiger from '../assets/animal/baby_tiger.png'
+import baby_molly from '../assets/animal/baby_molly.png';
 import bg_01 from '../assets/background/bg_01.png'
 import bg_02 from '../assets/background/bg_02.png'
 import bg_03 from '../assets/background/bg_03.png'
@@ -102,10 +103,6 @@ import question from '../assets/battle/question.png'
 import time from '../assets/battle/time.png'
 import guts from '../assets/battle/guts.png'
 
-import eat_test1 from '../assets/characters/eat/eat_test1.gif';
-import eat_test6 from '../assets/characters/eat/eat_test6.gif'
-import eat_test2 from '../assets/characters/eat/eat_test2.gif'
-import eat_test5 from '../assets/characters/eat/eat_test5.gif'
 
 
 export const images = {
@@ -207,7 +204,8 @@ export const images = {
         baby_PANDA: baby_panda,
         baby_QUOKKA: baby_quokka,
         baby_SHIBA: baby_shiba,
-        baby_TIGER: baby_tiger
+        baby_TIGER: baby_tiger,
+        baby_MOLLY: baby_molly
     },
     background : {
         bg_01: bg_01,

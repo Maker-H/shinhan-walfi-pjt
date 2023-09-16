@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import images from "../../../common/imgDict";
 import axios from "../../../common/http-common";
@@ -31,6 +31,7 @@ const Map = () => {
   const [exchange, setexchange] = useState(null);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const userId = useSelector(state=>state.auth.userId)
 
   useEffect(() => {
     // 내 좌표 기준 주변 은행
@@ -97,7 +98,7 @@ const Map = () => {
     // 내 메인 동물 호출
     try {
       const response = await axios.post(`/character/getmain`, {
-        userId: "ssafy",
+        userId: userId,
       });
       const data = response.data;
       setmyAnimal(data.data.characterDto);
@@ -124,6 +125,7 @@ const Map = () => {
     LION: "EUR",
     QUOKKA: "AUD",
     PANDA: "CNY",
+    MOLLY: "KRW"
   };
 
   const setExchangeForAnimal = (animalType) => {

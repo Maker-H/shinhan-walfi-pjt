@@ -38,7 +38,6 @@ const ISO = {
 }
 
 export default function MakeDetail({route,navigation}){
-  
   useFocusEffect(()=>{
     const date = new Date().toDateString();
     console.log(date)

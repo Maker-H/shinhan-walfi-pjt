@@ -8,7 +8,6 @@ import { convStyle } from "../walletcomponents/virtualkeyboard/ConvKeypad";
 import { Background } from "../walletcomponents/CommonStyle";
 
 export default function SendMemo({route,navigation}) {
-
   // 뒤로가기 막기
   React.useEffect(() =>
     navigation.addListener('beforeRemove', (e) => {
@@ -19,8 +18,7 @@ export default function SendMemo({route,navigation}) {
   );
 
   const type = route.params.type
-  
-  console.log('이체 확인 페이지 route.params 확인 용', route.params)
+
   
   return (
     <View style={{...Background.whiteback, justifyContent:'space-evenly'}}>

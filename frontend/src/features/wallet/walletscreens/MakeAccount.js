@@ -23,26 +23,26 @@ import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function MakeAccount({ navigation }){
-  const {userId, mainAccount} = useSelector(state=>state.auth)
+  const userId = useSelector(state=>state.auth.userId)
   const onPress = async(type) => {
-    console.log(type)
+    let response;
     const data = {
       userId
     }
-    let response;
     try{
       if(type==='Levelup'){
         response = await axios.post('character/maxcharacter', data);
       }else if(type==='Top10'){
         response = await axios.post('branch/getmanagernum',data);
       }else if(type==='Battle'){
-        response = await axios.post(`battle/getbattlecount?${userId}`)
+        response = await axios.post(`battle/getbattlecount?userId=${userId}`)
+        console.log(response)
       }else{
         return ;
       }
       navigation.navigate('MakeDeposit',{type, data:response.data.data})
     }catch(err){
-      console.log('예금 생성 실패')
+      console.log('예금 생성 실패',err)
     }
   }
 
