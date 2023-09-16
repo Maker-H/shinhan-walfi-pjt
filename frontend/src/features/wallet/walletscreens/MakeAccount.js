@@ -9,6 +9,7 @@ import {
 import JumpAccount from '../../../assets/wallet/JumpAccount.png';
 import BaseballAccount from '../../../assets/wallet/BaseballAccount.png';
 import LevelupAccount from '../../../assets/wallet/LevelupAccount.png'
+import TopTenAccount from '../../../assets/wallet/TopTenAccount.png'
 
 import { RFPercentage } from "react-native-responsive-fontsize";
 import {Background} from '../walletcomponents/CommonStyle';
@@ -26,7 +27,12 @@ export default function MakeAccount({ navigation }){
     const data = {
       userId
     }
-    const response = await axios.post('character/maxcharacter', data);
+    let response;
+    if(type==='Levelup'){
+      response = await axios.post('character/maxcharacter', data);
+    }else if(type==='Top10'){
+      response = await axios.post('branch/getmanagernum',data);
+    }
     navigation.navigate('MakeDeposit',{type, data:response.data.data})
   }
   return(
@@ -36,6 +42,9 @@ export default function MakeAccount({ navigation }){
       </View>
       <TouchableOpacity onPress={()=>onPress('Levelup')}>
         <Image source={LevelupAccount} style={{width:SCREEN_WIDTH*0.9, height:SCREEN_HEIGHT*0.25, resizeMode:'contain'}}/>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>onPress('Top10')}>
+        <Image source={TopTenAccount} style={{width:SCREEN_WIDTH*0.9, height:SCREEN_HEIGHT*0.25, resizeMode:'contain'}}/>
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>navigation.navigate('MakeDeposit')}>
         <Image source={JumpAccount} style={{width:SCREEN_WIDTH*0.9, height:SCREEN_HEIGHT*0.25, resizeMode:'contain'}}/>

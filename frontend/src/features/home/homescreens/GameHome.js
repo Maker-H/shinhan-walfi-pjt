@@ -141,7 +141,6 @@ function Content(props) {
       setTimeout(()=>{
         setNowAct(nowAct==='rest'?null:'rest')
       },ACT_TIME)
-      console.log('게임홈 143, 동물이 현재 하고 있는일 확인',nowAct)
     }else{
       console.log('게임홈 146, 종료 확인 끝')
     }
@@ -207,6 +206,7 @@ function Content(props) {
           style={{ width: '100%', height: '50%', resizeMode: 'contain' }}
         />}
         {nowAct==='밥먹기'&&<Image source={images.eatCharacter[type]} style={actStyles.eating}/>}
+        {nowAct==='훈련하기'&&<Image source={require('../../../assets/game/loading/LoadingImg.gif')} style={actStyles.eating}/>}
         <Text style={{
           color: '#3B3B3B',
           fontWeight: 'bold',

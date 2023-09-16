@@ -17,10 +17,13 @@ import { useFocusEffect } from "@react-navigation/native";
 
 const Deposit = {
   'Levelup':{
-    'message': '최고 레벨 캐릭터 수 +',
-}}
+    'message': '최고 레벨 캐릭터 수 +', 
+  },
+  'Top10':{
+    'message': '랭킹 + '
+  }
+}
 
-const selNations = ['KRW','USD','JPY','EUR','CNY','AUD'];
 
 const ISO = {
   'KRW': '원',
@@ -42,6 +45,9 @@ export default function MakeDetail({route,navigation}){
 
   const type = route.params.type;
   const detail = route.params.data;
+
+  const selNations = type==='Top10'?['KRW']:['KRW','USD','JPY','EUR','CNY','AUD'];
+
 
   const [money, setMoney] = useState('0');  
   const total = Number(money) * Number(detail.가입기간)
