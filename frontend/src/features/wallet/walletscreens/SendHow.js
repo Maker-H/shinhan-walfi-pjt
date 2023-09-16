@@ -23,21 +23,22 @@ export default function SendHow({route, navigation}){
   const exchangeRate = type==='환전'?route.params.exchange:'0';
   const toNation = type==='환전'?route.params.toNation:'';
   const ISO = type==='환전'?route.params.ISO:outAcc.ISO;
-
-
-  const [money, setMoney] = useState(0); // 입력 금액 (문자)
+  
 
   const form_balance = Number(balance).toLocaleString('es-US'); // 잔액을 돈 형식 정규화
 
+  // 입력 금액 
+  const [money, setMoney] = useState(0); // 입력 금액 (문자)
   const num_money=Number(money); // 입력 금액 -> 숫자
   const form_money=Number(money).toLocaleString('es-US'); // 돈 형식으로 정규화
 
+  // 원화로 계산한 외화
   const exchangedMoney = ((Number(exchangeRate)*num_money)/(ISO==='¥'?100:1)).toFixed(0) // 환전 시 매매율 * 입력 금액해서 원화 표기 
-  
   const form_exchangedMoney = Number(exchangedMoney).toLocaleString('es-US');
 
+  // 잔액 확인
   const isOver = type==='송금'||toNation==='KRW'? 
-      balance < num_money: balance< Number(exchangedMoney) // 잔액을 초과하는가?
+      balance < num_money: balance< Number(exchangedMoney) 
 
   const {mainAccount, userId} = useSelector(state=>state.auth)
   

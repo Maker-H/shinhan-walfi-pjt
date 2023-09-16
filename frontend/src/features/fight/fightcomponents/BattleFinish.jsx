@@ -19,6 +19,11 @@ const BattleFinish = () => {
   const resultToServer = async () => {
     // 결과값 서버로 전송
     try {
+      // 여기 급하게 한 줄 추가했슴다.
+      if(battleResult!=='승리'){
+        await axios.post(`/battle/count?userId=${userId}`)
+        return;
+      }
       await axios.post(`/battle?branchIdx=${bankIdx}&userId=${userId}`, {
         userId: userId,
       });

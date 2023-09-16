@@ -49,7 +49,6 @@ export default function GameHome({ navigation }) {
   useFocusEffect(()=>{
     dispatch(getMainCharacter(userId));
   })
-//   console.log(images.background.home)
   return (
     <View style={globalStyles.container}>
       <ImageBackground source={images.Background.home} style={globalStyles.bgImg}>
@@ -141,8 +140,6 @@ function Content(props) {
       setTimeout(()=>{
         setNowAct(nowAct==='rest'?null:'rest')
       },ACT_TIME)
-    }else{
-      console.log('게임홈 146, 종료 확인 끝')
     }
   },[nowAct])
 

@@ -24,7 +24,7 @@ const Deposit = {
   }
 }
 
-
+// 여기 따로 export 시켰어야 하는데..
 const ISO = {
   'KRW': '원',
   'USD': '$',
@@ -42,17 +42,15 @@ export default function MakeDetail({route,navigation}){
   })
   const {userId, mainAccount} = useSelector(state=> state.auth)
   const [ntnCode, setNtnCode] = useState('KRW');
+  const [money, setMoney] = useState('0');  
 
   const type = route.params.type;
   const detail = route.params.data;
 
   const selNations = type==='Top10'?['KRW']:['KRW','USD','JPY','EUR','CNY','AUD'];
 
-
-  const [money, setMoney] = useState('0');  
   const total = Number(money) * Number(detail.가입기간)
   const show = Number(money).toLocaleString('en-US')
-  const [canmakeIt, setCanMakeIT] = useState(true);
 
   const onPress = () => {
     const data={

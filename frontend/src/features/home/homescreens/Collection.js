@@ -118,7 +118,6 @@ function CollectionHeader(props) {
 }
 
 function DetailPage(props) {
-  console.log(props.selectedCharacter)
   const dispatch = useDispatch();
   const setMain = () => {
     dispatch(updateCharacter({act: '', characterIdx: props.selectedCharacter.id, statusType: 'isMain', userId: props.userId, value: 0}))
