@@ -14,7 +14,6 @@ import com.shinhan.walfi.dto.game.GoodsItemResDto;
 import com.shinhan.walfi.dto.game.MarketReqDto;
 import com.shinhan.walfi.mapper.DecoMapper;
 import com.shinhan.walfi.mapper.MarketMapper;
-import com.shinhan.walfi.repository.banking.AccountRepository;
 import com.shinhan.walfi.repository.banking.CryptoWalletRepository;
 import com.shinhan.walfi.repository.game.CharacterRepository;
 import com.shinhan.walfi.util.CryptoUtil;
