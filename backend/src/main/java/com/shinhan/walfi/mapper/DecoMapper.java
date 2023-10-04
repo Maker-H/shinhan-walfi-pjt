@@ -1,6 +1,7 @@
 package com.shinhan.walfi.mapper;
 
 import com.shinhan.walfi.dao.ItemDao;
+import com.shinhan.walfi.domain.enums.ItemName;
 import com.shinhan.walfi.domain.game.GameItem;
 import com.shinhan.walfi.dto.game.ItemReqDto;
 import com.shinhan.walfi.dto.game.ItemResDto;
@@ -22,6 +23,6 @@ public interface DecoMapper {
     List<GameItem> getItemList(String userId);
 
     void changeOwner(String userId, Long itemIdx);
-    // Todo : xml 구현 필요
 
+    ItemName findNameById(Long itemIdx);
 }

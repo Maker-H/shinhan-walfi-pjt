@@ -1,6 +1,6 @@
 package com.shinhan.walfi.service.game;
 
-import com.shinhan.walfi.domain.game.Goods;
+import com.shinhan.walfi.domain.User;
 import com.shinhan.walfi.dto.game.BuyReqDto;
 import com.shinhan.walfi.dto.game.GoodsCharacterResDto;
 import com.shinhan.walfi.dto.game.GoodsItemResDto;
@@ -16,6 +16,6 @@ public interface MarketService {
 
     void sell(MarketReqDto marketReqDto);
 
-    void buy(String userId, BuyReqDto buyReqDto);
+    void buy(User userId, BuyReqDto buyReqDto);
 
 }
