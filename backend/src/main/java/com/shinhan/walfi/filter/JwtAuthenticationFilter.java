@@ -45,7 +45,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // AccessToken이 없거나, 'Bearer '로 시작하지 않는 경우
         if (authenticationToken == null || !authenticationToken.startsWith("Bearer ")) {
-
+            log.error("받은 JWT Token: {}", authenticationToken);
             log.error("token is null or not JWT token");
             filterChain.doFilter(request, response);
             return;
