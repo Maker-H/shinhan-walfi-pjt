@@ -25,8 +25,9 @@ public interface MarketMapper {
 
     int count(CharacterType characterType, String userId);
 
-    // Todo : xml 구현하기
     String findUserByCId(Long characterIdx);
 
     String findUserByIId(Long itemIdx);
+
+    void setMain(Long characterIdx);
 }
