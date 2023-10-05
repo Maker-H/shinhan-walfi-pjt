@@ -422,6 +422,7 @@ public class CharacterServiceImpl implements CharacterService {
     public void setFirstMain(Long characterIdx) {
         GameCharacter character = characterRepository.findCharacterByIdx(characterIdx);
         character.setMain(true);
+        characterRepository.save(character);
     }
 
     /**
