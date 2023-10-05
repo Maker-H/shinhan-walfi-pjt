@@ -19,4 +19,7 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query(value = "select * from account where 상품명 != '저축예금' and 만기일 = ?1", nativeQuery = true)
     List<Account> findAllProductAccount(Date expireDate);
+
+    @Query(value = "select 계좌번호 from account order by 계좌번호 desc limit 1;", nativeQuery = true)
+    String findLastAccountNum();
 }
