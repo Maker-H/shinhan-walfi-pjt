@@ -4,6 +4,7 @@ import com.shinhan.walfi.domain.HttpResult;
 import com.shinhan.walfi.domain.User;
 import com.shinhan.walfi.dto.*;
 import com.shinhan.walfi.dto.game.CharacterWithUserIdResDto;
+import com.shinhan.walfi.mapper.MarketMapper;
 import com.shinhan.walfi.service.UserService;
 import com.shinhan.walfi.service.game.CharacterService;
 import com.shinhan.walfi.util.JWTUtil;
@@ -24,6 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final CharacterService characterService;
+
+    private final MarketMapper marketMapper;
 
 
     private final JWTUtil jwtUtil;
@@ -84,7 +87,7 @@ public class UserController {
         // 기본 캐릭터 하나 생성
         CharacterWithUserIdResDto characterWithUserIdResDto = characterService.shop(userSignUpDto.getUserId());
         // 메인으로 지정
-        characterService.setFirstMain(characterWithUserIdResDto.getCharacterDto().getCharacterIdx());
+        marketMapper.setMain(characterWithUserIdResDto.getCharacterDto().getCharacterIdx());
         HttpResult result = HttpResult.getSuccess();
         return ResponseEntity.status(result.getStatus()).body(result);
     }

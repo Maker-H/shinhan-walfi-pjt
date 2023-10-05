@@ -418,13 +418,6 @@ public class CharacterServiceImpl implements CharacterService {
         return productResDto;
     }
 
-    @Override
-    public void setFirstMain(Long characterIdx) {
-        GameCharacter character = characterRepository.findCharacterByIdx(characterIdx);
-        character.setMain(true);
-        characterRepository.save(character);
-    }
-
     /**
      * GameCharacter를 CharacterDto로 변환하는 기능
      *
