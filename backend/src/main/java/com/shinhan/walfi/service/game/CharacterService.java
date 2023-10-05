@@ -30,4 +30,6 @@ public interface CharacterService {
                                                     int statusValue);
 
     ProductResDto getMaxLevelCharacterNum(String userId);
+
+    void setFirstMain(Long characterIdx);
 }
