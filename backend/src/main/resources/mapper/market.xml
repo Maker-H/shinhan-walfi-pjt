@@ -53,10 +53,14 @@
     </select>
 
     <select id="findUserByCId">
-        select address from CryptoWallet where user_id = (select user_id from game_character where character_idx = #{characterIdx});
+        select address
+        from crypto_wallet
+        where `대표계좌` = (select `대표계좌`
+                        from user
+                        where user_id = (select user_id from game_character where character_idx = #{characterIdx}));
     </select>
 
     <select id="findUserByIId">
-        select address from CryptoWallet where user_id = (select user_id from game_item where item_idx = #{itemIdx});
+        select address from crypto_wallet where 대표계좌 = (select 대표계좌 from user where user_id =(select user_id from game_item where item_idx = #{itemIdx}));
     </select>
 </mapper>
