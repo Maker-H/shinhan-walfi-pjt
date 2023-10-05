@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
@@ -21,7 +22,7 @@ public class Goods {
 
     private String goodsType;
 
-    private int price;
+    private BigDecimal price;
 
     private LocalDateTime createTime;
 

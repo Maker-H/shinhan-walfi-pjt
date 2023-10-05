@@ -3,18 +3,64 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shinhan.walfi.mapper.MarketMapper">
 
-    <resultMap id="Goods" type="com.shinhan.walfi.domain.game.Goods">
+    <resultMap id="GoodsDao" type="com.shinhan.walfi.dao.GoodsDao">
         <result column="goods_idx" property="goodsIdx"></result>
-        <result column="goods_Type" property="goodsType"></result>
+        <result column="goods_type" property="goodsType"></result>
         <result column="price" property="price"></result>
-        <result column="create_Time" property="createTime"></result>
+        <result column="create_time" property="createTime"></result>
         <result column="character_idx" property="characterIdx"></result>
         <result column="item_idx" property="itemIdx"></result>
     </resultMap>
 
-    <select id="getList" resultMap="Goods">
-        SELECT *  FROM goods;
+    <resultMap id="GoodsItemResDto" type="com.shinhan.walfi.dto.game.GoodsItemResDto">
+        <result column="goods_idx" property="goodsIdx"></result>
+        <result column="goods_type" property="goodsType"></result>
+        <result column="price" property="price"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="item_idx" property="itemIdx"></result>
+    </resultMap>
+
+    <resultMap id="GoodsCharacterResDto" type="com.shinhan.walfi.dto.game.GoodsCharacterResDto">
+        <result column="goods_idx" property="goodsIdx"></result>
+        <result column="goods_type" property="goodsType"></result>
+        <result column="price" property="price"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="character_idx" property="characterIdx"></result>
+    </resultMap>
+
+    <select id="getItemList" resultMap="GoodsItemResDto">
+        SELECT goods_idx, goods_type, price, create_time, item_idx  FROM goods where goods_type = 'i';
     </select>
 
+    <select id="getCharacterList" resultMap="GoodsCharacterResDto">
+        SELECT goods_idx, goods_type, price, create_time, character_idx  FROM goods where goods_type = 'c';
+    </select>
 
+    <insert id="sell">
+        INSERT INTO `goods` (`goods_type`, `price`, `item_idx`, `character_idx`) VALUES (#{goodsType}, #{price}, #{itemIdx}, #{characterIdx});
+    </insert>
+
+    <select id="findById" resultMap="GoodsDao">
+        select * from goods where goods_idx = #{goodsIdx};
+    </select>
+
+    <delete id="delete">
+        delete from goods where goods_idx = #{goodsIdx};
+    </delete>
+
+    <select id="count">
+        select count(*) from game_character where character_type = #{characterType} and user_id = #{userId}
+    </select>
+
+    <select id="findUserByCId">
+        select address
+        from crypto_wallet
+        where `대표계좌` = (select `대표계좌`
+                        from user
+                        where user_id = (select user_id from game_character where character_idx = #{characterIdx}));
+    </select>
+
+    <select id="findUserByIId">
+        select address from crypto_wallet where 대표계좌 = (select 대표계좌 from user where user_id =(select user_id from game_item where item_idx = #{itemIdx}));
+    </select>
 </mapper>

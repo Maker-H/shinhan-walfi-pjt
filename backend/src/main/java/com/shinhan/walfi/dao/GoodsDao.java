@@ -3,6 +3,7 @@ package com.shinhan.walfi.dao;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,7 +14,7 @@ public class GoodsDao {
 
     private String goodsType;
 
-    private int price;
+    private BigDecimal price;
 
     private LocalDateTime createTime;
 

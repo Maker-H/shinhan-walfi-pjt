@@ -43,6 +43,12 @@
         select * from game_item where user_id = #{userId}
     </select>
 
+    <update id="changeOwner">
+        update game_item set user_id = #{userId} where item_idx = #{itemIdx}
+    </update>
 
+    <select id="findNameById">
+        select item_name from game_item where item_idx = #{itemIdx};
+    </select>
 
 </mapper>
