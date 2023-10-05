@@ -22,8 +22,25 @@ public class QuestAspect {
 
     private final QuestMapper questMapper;
 
+    private long aa(String status) {
+
+        long returnValue = 0L;
+
+        switch (status) {
+            case "밥먹기 완료":
+                returnValue = 3L;
+                break;
+            case "훈련하기 완료":
+                returnValue = 4L;
+                break;
+        }
+
+        return returnValue;
+    }
+
     @AfterReturning(
-            pointcut = "execution(* com.shinhan.walfi.controller.BankController.*(..))",
+            pointcut = "execution(* com.shinhan.walfi.controller.BankController.*(..)) || " +
+                    "execution(* com.shinhan.walfi.controller.CharacterController.*(..))",
             returning = "result"
     )
     public void conductQuest(JoinPoint joinPoint, ResponseEntity<HttpResult> result) {
@@ -44,6 +61,9 @@ public class QuestAspect {
         switch (methodName) {
             case "localTransfer":
                 questIdx = 1L;
+                break;
+            case "changeCharacterStatus":
+                questIdx = aa(result.getBody().getMessage());
                 break;
         }
 

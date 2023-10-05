@@ -126,6 +126,7 @@ public class CharacterController {
 
         res = HttpResult.getSuccess();
         res.setData(characterWithUserIdResDto);
+        res.setMessage(act.concat(" 완료"));
 
         return ResponseEntity.status(res.getStatus()).body(res);
     }
