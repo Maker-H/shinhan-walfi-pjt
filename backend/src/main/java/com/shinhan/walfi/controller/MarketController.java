@@ -60,7 +60,7 @@ public class MarketController {
 
     @PostMapping("/buy")
     @ApiOperation(value = "사용자가 구매하고 싶은 상품을 구매")
-    public ResponseEntity<HttpResult> getItemAndCharactor(@ApiIgnore @AuthenticationPrincipal User user, BuyReqDto buyReqDto) {
+    public ResponseEntity<HttpResult> getItemAndCharactor(@ApiIgnore @AuthenticationPrincipal User user, @RequestBody BuyReqDto buyReqDto) {
 
         marketService.buy(user, buyReqDto);
         HttpResult res = HttpResult.getSuccess();
