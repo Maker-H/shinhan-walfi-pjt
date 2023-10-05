@@ -3,7 +3,6 @@ package com.shinhan.walfi.controller;
 import com.shinhan.walfi.domain.HttpResult;
 import com.shinhan.walfi.domain.User;
 import com.shinhan.walfi.dto.*;
-import com.shinhan.walfi.dto.user.UserLoginResDto;
 import com.shinhan.walfi.service.UserService;
 import com.shinhan.walfi.util.JWTUtil;
 import io.swagger.annotations.ApiOperation;
@@ -76,7 +75,6 @@ public class UserController {
     public ResponseEntity<HttpResult> signup(@RequestBody UserSignUpDto userSignUpDto) {
         log.debug("회원가입 아이디 : "+userSignUpDto.getUserId());
         User user = userSignUpDto.UserDtoToEntity();
-        log.debug("회원가입 아이디 : "+user.getUserId());
         userService.signup(user);
         HttpResult result = HttpResult.getSuccess();
         return ResponseEntity.status(result.getStatus()).body(result);

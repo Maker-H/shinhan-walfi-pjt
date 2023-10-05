@@ -17,4 +17,9 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query(value = "select * from user", nativeQuery = true)
     List<User> findAll();
 
+    @Query(value = "select count(user_id) from user where user_id = ?1", nativeQuery = true)
+    int countId(String userId);
+
+    @Query(value = "select 대표계좌 from user order by 대표계좌 desc limit 1", nativeQuery = true)
+    String findLastMainNum();
 }
