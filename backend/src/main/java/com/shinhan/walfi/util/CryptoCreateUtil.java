@@ -1,25 +1,20 @@
 package com.shinhan.walfi.util;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shinhan.walfi.domain.User;
 import com.shinhan.walfi.domain.banking.CryptoWallet;
 import com.shinhan.walfi.domain.enums.CoinType;
-import com.shinhan.walfi.repository.UserRepository;
 import com.shinhan.walfi.repository.banking.CryptoWalletRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.web3j.crypto.*;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -31,18 +26,14 @@ public class CryptoCreateUtil {
 
     private final CryptoWalletRepository cryptoWalletRepository;
 
-    private final UserRepository userRepository;
-
     private final CryptoSignUtil cryptoSignUtil;
 
     /**
      * 가상화폐 계좌 생성
-     * @param userId
+     *
      * @throws IOException
      */
-    public void createCryptoWallet(String userId){
-
-        User user = userRepository.find(userId);
+    public void createCryptoWallet(User user, CoinType coinType) {
 
         Map<String, Object> map;
 
@@ -55,10 +46,9 @@ public class CryptoCreateUtil {
         String address = (String) map.get("address");
 
         // 다른 코인 계좌 만들고 싶으면 여기서 변경...
-        CryptoWallet cryptoWallet = CryptoWallet.createCryptoWallet(jsonWalletString, encPwd, passwordKey, address, user, CoinType.SEP);
+        CryptoWallet cryptoWallet = CryptoWallet.createCryptoWallet(jsonWalletString, encPwd, passwordKey, address, user, coinType);
         cryptoWalletRepository.save(cryptoWallet);
         log.info("=== {} 코인에 대한 {} 계좌 생성", CoinType.SEP, address);
-
     }
 
     /**
@@ -66,6 +56,7 @@ public class CryptoCreateUtil {
      * 2. 비밀번호와 타원 곡선 암호화 쌍으로 json_wallet 파일 생성 <br>
      * 3. 잠금 키로 비밀번호 암호화 <br>
      * 4. 암호화 한 비밀번호, 잠금키, json_wallet 저장 <br>
+     *
      * @return
      */
     private Map<String, Object> createCredentials() {

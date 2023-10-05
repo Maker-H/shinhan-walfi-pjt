@@ -9,15 +9,22 @@ import java.util.List;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AccountUtil {
 
-    public String createAccountNum(List<String> accountsNum) {
-        String defaultAccountNum = "110001";
+    private final AccountRepository accountRepository;
 
-        String lastAccountNum = accountsNum.get(accountsNum.size() - 1);
+    public String createAccountNum() { //List<String> accountsNum
+        // Account 테이블에서 계좌 번호 조회해서 가장 뒷번호로 +1 반환
+//        String defaultAccountNum = "110001";
+//
+//        String lastAccountNum = accountsNum.get(accountsNum.size() - 1);
+//
+//        Long subLastAccountNum = Long.parseLong(lastAccountNum.substring(defaultAccountNum.length())) + 1;
+//
+//        return defaultAccountNum + subLastAccountNum;
 
-        Long subLastAccountNum = Long.parseLong(lastAccountNum.substring(defaultAccountNum.length())) + 1;
-
-        return defaultAccountNum + subLastAccountNum;
+        String lastAccountNUm = accountRepository.findLastAccountNum();
+        return lastAccountNUm;
     }
 }

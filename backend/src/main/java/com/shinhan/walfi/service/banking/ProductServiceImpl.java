@@ -83,8 +83,8 @@ public class ProductServiceImpl implements ProductService{
             throw new TransferException(TransferErrorCode.OVERDRAWN);
         }
 
-        List<String> accounts = accountRepository.findAccountsWithOnlyAccountNum();
-        String accountNum = accountUtil.createAccountNum(accounts);
+//        List<String> accounts = accountRepository.findAccountsWithOnlyAccountNum();
+        String accountNum = accountUtil.createAccountNum();
 
         // 상품 만들기
         Account productAccount = null;

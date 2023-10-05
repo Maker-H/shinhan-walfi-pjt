@@ -2,18 +2,20 @@ package com.shinhan.walfi.service;
 
 import com.shinhan.walfi.domain.User;
 import com.shinhan.walfi.domain.banking.Account;
+import com.shinhan.walfi.domain.enums.CoinType;
 import com.shinhan.walfi.domain.game.UserGameInfo;
 import com.shinhan.walfi.dto.TokenDto;
 import com.shinhan.walfi.dto.UserDto;
 import com.shinhan.walfi.exception.UserException;
 import com.shinhan.walfi.repository.UserRepository;
+import com.shinhan.walfi.repository.banking.AccountRepository;
 import com.shinhan.walfi.repository.game.UserGameInfoRepository;
 import com.shinhan.walfi.util.AccountUtil;
+import com.shinhan.walfi.util.CryptoCreateUtil;
 import com.shinhan.walfi.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,7 +39,11 @@ public class UserServiceImpl implements UserService {
 
     private final AccountUtil accountUtil;
 
+    private final CryptoCreateUtil cryptoCreateUtil;
+
     private final UserRepository userRepository;
+
+    private final AccountRepository accountRepository;
 
     private final UserGameInfoRepository userGameInfoRepository;
 
@@ -110,7 +116,7 @@ public class UserServiceImpl implements UserService {
     public void signup(User user) {
         // 아이디 중복시 회원 가입 싫패, exception 발생
         int idCnt = userRepository.countId(user.getUserId());
-        if(idCnt > 0) throw new UserException(ID_DUPLICATED);
+        if (idCnt > 0) throw new UserException(ID_DUPLICATED);
 
         // 비밀번호 암호화
         String encodedPW = passwordEncoder.encode(user.getPassword());
@@ -118,7 +124,7 @@ public class UserServiceImpl implements UserService {
 
         // 대표 계좌 생성
         String lastNum = userRepository.findLastMainNum();
-        int newNum = Integer.parseInt(lastNum)+1;
+        long newNum = Long.parseLong(lastNum) + 1;
         user.set대표계좌(String.valueOf(newNum));
 
         // user 생성
@@ -130,23 +136,21 @@ public class UserServiceImpl implements UserService {
         userGameInfo.setStatus("도전자");
         userGameInfoRepository.save(userGameInfo);
 
-        // Todo : 계좌 6개 생성
-        /*
-        2. 통화 6개 리스트로 만들어 놓고 Account 엔티티의 create 함수를 사용하여 계좌 생성,
-        계좌번호 생성은 AccountUtil을 사용하기
+        String[] accounts = {"KRW", "USD", "JPY", "EUR", "CNY", "AUD"};
 
-        3. 계좌 생성 유틸 수정
-         */
+        String accountNum = accountUtil.createAccountNum();
+        long lastAccountNum = Long.parseLong(accountNum) + 1;
+        for (int i = 0; i < 6; i++) {
+            String newAccountNum = String.valueOf(lastAccountNum + i);
+            Account account = Account.createBasicAccount(newAccountNum, accounts[i], userResult);
+            accountRepository.save(account);
+        }
 
-//        String[] accounts = {"KOR"};
-//        String accountNum = accountUtil.createAccountNum();
-//        Account account = Account.createKrwProductAccount(accountNum, "저축예금", null, 0.000, "KRW", );
+        // sep 월렛 생성
+        cryptoCreateUtil.createCryptoWallet(userResult, CoinType.SEP);
 
-
-
-
-
-
+        // 월피 월렛
+        cryptoCreateUtil.createCryptoWallet(userResult, CoinType.WALFI);
     }
 
     /**
@@ -165,7 +169,7 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-    public UserDto findUserById(String userId){
+    public UserDto findUserById(String userId) {
         User user = userRepository.findById(userId).get();
         UserDto userDto = getUserDto(user);
         return userDto;
