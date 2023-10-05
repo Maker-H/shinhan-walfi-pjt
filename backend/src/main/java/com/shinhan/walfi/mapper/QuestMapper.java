@@ -19,6 +19,9 @@ public interface QuestMapper {
     void increaseSpecificPerformedQuest(@Param("user_id") String user_id,
                                         @Param("quest_id") long quest_id);
 
+    boolean checkQuestIsCompleted(@Param("user_id") String user_id,
+                                  @Param("quest_id") long quest_id);
+
     boolean checkIFQuestIsComplete(@Param("user_id") String user_id,
                                    @Param("quest_id") long quest_id);
 
@@ -26,4 +29,8 @@ public interface QuestMapper {
 
     void updateQuestStatusTrue(@Param("user_id") String user_id,
                                @Param("quest_id") long quest_id);
+
+    void updateQuestStatus(@Param("user_id") String user_id,
+                           @Param("quest_id") long quest_id,
+                           @Param("status") int status);
 }
