@@ -130,6 +130,11 @@ public class CryptoUtil {
         return Convert.fromWei(new BigDecimal(wei), Convert.Unit.ETHER).toPlainString();
     }
 
+    public BigInteger convertEthToWei(String eth) {
+        BigDecimal ethInBD = new BigDecimal(eth);
+        return ethInBD.multiply(BigDecimal.valueOf(10).pow(18)).toBigInteger();
+    }
+
 
     /**
      * 1. json_wallet에서 파일 읽고 encpwd와 password_key로 암호 복호화 <br>
