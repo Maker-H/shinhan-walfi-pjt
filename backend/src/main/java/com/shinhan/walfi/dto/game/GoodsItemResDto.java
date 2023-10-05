@@ -19,4 +19,8 @@ public class GoodsItemResDto {
     private LocalDateTime createTime;
 
     private Long itemIdx;
+
+    private String seller;
+
+    private String itemName;
 }

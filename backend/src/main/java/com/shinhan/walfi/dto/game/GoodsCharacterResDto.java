@@ -19,4 +19,10 @@ public class GoodsCharacterResDto {
     private LocalDateTime createTime;
 
     private Long characterIdx;
+
+    private String characterType;
+
+    private String color;
+
+    private String seller;
 }
