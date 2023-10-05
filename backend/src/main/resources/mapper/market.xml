@@ -18,6 +18,8 @@
         <result column="price" property="price"></result>
         <result column="create_time" property="createTime"></result>
         <result column="item_idx" property="itemIdx"></result>
+        <result column="seller" property="seller"></result>
+        <result column="item_name" property="itemName"></result>
     </resultMap>
 
     <resultMap id="GoodsCharacterResDto" type="com.shinhan.walfi.dto.game.GoodsCharacterResDto">
@@ -26,14 +28,17 @@
         <result column="price" property="price"></result>
         <result column="create_time" property="createTime"></result>
         <result column="character_idx" property="characterIdx"></result>
+        <result column="character_type" property="characterType"></result>
+        <result column="color" property="color"></result>
+        <result column="seller" property="seller"></result>
     </resultMap>
 
     <select id="getItemList" resultMap="GoodsItemResDto">
-        SELECT goods_idx, goods_type, price, create_time, item_idx  FROM goods where goods_type = 'i';
+        SELECT goods_idx, goods_type, price, create_time, item_idx, i.user_id seller, i.item_name  FROM goods join game_item i using(item_idx) where goods_type = 'i';
     </select>
 
     <select id="getCharacterList" resultMap="GoodsCharacterResDto">
-        SELECT goods_idx, goods_type, price, create_time, character_idx  FROM goods where goods_type = 'c';
+        SELECT goods_idx, goods_type, price, create_time, character_idx, character_type, color, user_id seller FROM goods join game_character c using(character_idx) where goods_type = 'c';
     </select>
 
     <insert id="sell">
