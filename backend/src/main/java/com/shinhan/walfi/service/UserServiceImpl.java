@@ -1,10 +1,14 @@
 package com.shinhan.walfi.service;
 
 import com.shinhan.walfi.domain.User;
+import com.shinhan.walfi.domain.banking.Account;
+import com.shinhan.walfi.domain.game.UserGameInfo;
 import com.shinhan.walfi.dto.TokenDto;
 import com.shinhan.walfi.dto.UserDto;
 import com.shinhan.walfi.exception.UserException;
 import com.shinhan.walfi.repository.UserRepository;
+import com.shinhan.walfi.repository.game.UserGameInfoRepository;
+import com.shinhan.walfi.util.AccountUtil;
 import com.shinhan.walfi.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,18 +23,23 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.shinhan.walfi.exception.UserErrorCode.ID_DUPLICATED;
 import static com.shinhan.walfi.exception.UserErrorCode.NO_MATCHING_USER;
 
 
 @Slf4j
 @Service
-//@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final JWTUtil jwtUtil;
 
+    private final AccountUtil accountUtil;
+
     private final UserRepository userRepository;
+
+    private final UserGameInfoRepository userGameInfoRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -99,11 +108,44 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void signup(User user) {
+        // 아이디 중복시 회원 가입 싫패, exception 발생
+        int idCnt = userRepository.countId(user.getUserId());
+        if(idCnt > 0) throw new UserException(ID_DUPLICATED);
+
+        // 비밀번호 암호화
         String encodedPW = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPW);
+
+        // 대표 계좌 생성
+        String lastNum = userRepository.findLastMainNum();
+        int newNum = Integer.parseInt(lastNum)+1;
+        user.set대표계좌(String.valueOf(newNum));
+
+        // user 생성
         User userResult = userRepository.save(user);
-        log.debug("회원 가입 계정 : "+userResult.toString());
-        // Todo : user_gameinfo 생성, 계좌 6개 생성
+
+        // UserGameInfo 생성
+        UserGameInfo userGameInfo = new UserGameInfo();
+        userGameInfo.setUserId(userResult.getUserId());
+        userGameInfo.setStatus("도전자");
+        userGameInfoRepository.save(userGameInfo);
+
+        // Todo : 계좌 6개 생성
+        /*
+        2. 통화 6개 리스트로 만들어 놓고 Account 엔티티의 create 함수를 사용하여 계좌 생성,
+        계좌번호 생성은 AccountUtil을 사용하기
+
+        3. 계좌 생성 유틸 수정
+         */
+
+//        String[] accounts = {"KOR"};
+//        String accountNum = accountUtil.createAccountNum();
+//        Account account = Account.createKrwProductAccount(accountNum, "저축예금", null, 0.000, "KRW", );
+
+
+
+
+
 
     }
 
@@ -128,5 +170,6 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = getUserDto(user);
         return userDto;
     }
+
 }
 
