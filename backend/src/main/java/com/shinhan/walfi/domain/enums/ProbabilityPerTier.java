@@ -3,12 +3,12 @@ package com.shinhan.walfi.domain.enums;
 import lombok.Getter;
 
 @Getter
-public enum ProbabilityPerTier {
+public enum ProbabilityPerTier { // 10, 5, 84.9, 0.1
 
-    NORMAL(10),
-    EPIC(5),
-    UNIQUE(84.9),
-    LEGENDARY(0.1);
+    NORMAL(33),
+    EPIC(33),
+    UNIQUE(33),
+    LEGENDARY(1);
 
     final double percent;
 
