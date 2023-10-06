@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shinhan.walfi.mapper.DecoMapper">
+
+    <resultMap id="ItemResDto" type="com.shinhan.walfi.dto.game.ItemResDto">
+        <result column="item_idx" property="itemIdx"></result>
+        <result column="item_name" property="itemName"></result>
+        <result column="y" property="y"></result>
+        <result column="x" property="x"></result>
+        <result column="rotation" property="rotation"></result>
+        <result column="size" property="size"></result>
+        <result column="character_idx" property="characterIdx"></result>
+        <result column="character_type" property="characterType"></result>
+    </resultMap>
+
+    <resultMap id="GameItem" type="com.shinhan.walfi.domain.game.GameItem">
+        <result column="item_idx" property="itemIdx"></result>
+        <result column="item_name" property="itemName"></result>
+        <result column="y" property="y"></result>
+        <result column="x" property="x"></result>
+        <result column="rotation" property="rotation"></result>
+        <result column="size" property="size"></result>
+    </resultMap>
+
+    <select id="getItemCharacter" resultMap="ItemResDto">
+        select item_idx, item_name, y, x, rotation, size, character_idx, character_type from game_item join game_character c using(item_idx) where c.user_id = #{userId}
+    </select>
+
+    <update id="update">
+        update game_character set y = #{y}, x = #{x}, rotation = #{rotation}, size = #{size}, item_idx = #{itemIdx} where character_idx = #{characterIdx}
+    </update>
+
+    <insert id="create">
+        insert into game_item (user_id, item_name) values(#{userId}, #{itemName});
+    </insert>
+
+    <select id="count">
+        select count(*) from game_item where user_id = #{userId} and item_name = #{itemName};
+    </select>
+
+    <select id="getItemList" resultMap="GameItem">
+        select * from game_item where user_id = #{userId}
+    </select>
+
+    <update id="changeOwner">
+        update game_item set user_id = #{userId} where item_idx = #{itemIdx}
+    </update>
+
+    <select id="findNameById">
+        select item_name from game_item where item_idx = #{itemIdx};
+    </select>
+
+</mapper>

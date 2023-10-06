@@ -23,16 +23,55 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    // Swagger-UI
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // RestTemplate : 외부 API 호출
+    implementation 'org.apache.httpcomponents:httpcore:4.4.15'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+    
+    // Json-simple : JSON 파싱
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+
+    testImplementation 'junit:junit:4.13.1'
+
+    // test를 위한 메모리에서 작동하는 db
+    runtimeOnly 'com.h2database:h2'
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
+//    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // db sql 로그 (개인 개발)
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
+
+    // web3 관련
+    implementation group: 'org.web3j', name: 'core', version: '5.0.0'
+    implementation group: 'de.trustable', name: 'cryptoUtil', version: '1.3.21'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
+
+
 
 tasks.named('test') {
     useJUnitPlatform()

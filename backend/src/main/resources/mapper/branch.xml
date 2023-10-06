@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shinhan.walfi.mapper.BranchMapper">
+
+    <resultMap id="branch" type="com.shinhan.walfi.dto.game.BranchListResDto">
+        <result column="branch_idx" property="지점번호"></result>
+        <result column="address" property="지점주소"></result>
+        <result column="branch_name" property="지점명"></result>
+        <result column="branch_phone_number" property="지점대표전화번호"></result>
+        <result column="latitude" property="지점위도"></result>
+        <result column="longitude" property="지점경도"></result>
+    </resultMap>
+
+    <resultMap id="branchmore" type="com.shinhan.walfi.dto.game.BranchDto">
+        <result column="branch_idx" property="지점번호"></result>
+        <result column="address" property="지점주소"></result>
+        <result column="branch_name" property="지점명"></result>
+        <result column="branch_phone_number" property="지점대표전화번호"></result>
+        <result column="latitude" property="지점위도"></result>
+        <result column="longitude" property="지점경도"></result>
+        <result column="manager_level" property="managerLevel"></result>
+        <result column="manager_exp" property="managerExp"></result>
+        <result column="manager_hp" property="managerHp"></result>
+        <result column="manager_atk" property="managerAtk"></result>
+        <result column="manager_def" property="managerDef"></result>
+    </resultMap>
+
+    <select id="getBranches" resultMap="branch">
+        select branch_idx, address, branch_name, branch_phone_number, latitude, longitude
+        from branch
+        where latitude &gt; ${minLatitude}
+          and latitude &lt; ${plusLatitude}
+          and longitude &gt; ${minLongitude}
+          and longitude &lt; ${plusLongitude}
+    </select>
+
+    <select id="getBranch" resultMap="branchmore">
+        select * from branch where branch_idx = #{id}
+    </select>
+
+</mapper>

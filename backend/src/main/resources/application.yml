@@ -1,24 +1,53 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/walfi?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/walfi?useSSL=false&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: ssafy
-    password: ssafy
-
-
+    password: pass1234!
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
       use-new-id-generator-mappings: false
     show-sql: true
     properties:
       hibernate.format_sql: true
       dialect: org.hibernate.dialect.MySQL8InnoDBDialect
+  auth:
+    secretKey: 6v9y$B&E)H@MbQeThWmZq4t7w!z%C*F-
+  redis:
+    host: localhost
+    port: 6379
 
+
+ethereum:
+  service:
+    url: https://eth-sepolia.g.alchemy.com/v2/c2-H0YY16C5nDYa21bfu38rvmR-ilM36
+  api:
+    key: TN6YGB9WW6J9HNFDRH9GEMD3SMBTYI6ISY
+
+pinata:
+  service:
+    url: https://fuchsia-causal-takin-17.mypinata.cloud
+  api:
+    key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIwNzhjYmVhYi1kN2U1LTRmOGMtYmNkNi0wMDU1NWJhOTc1MGQiLCJlbWFpbCI6ImhlZXNvbS5oc0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJpZCI6IkZSQTEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX0seyJpZCI6Ik5ZQzEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiZmEwZmNiODIyZTkwYWE1YmJlMjYiLCJzY29wZWRLZXlTZWNyZXQiOiI5Y2VmMWRlYWVkMDA3NmEyM2M5YjRhYTM5NDY2ODM4Y2I3NDNlNWZkYTRkM2FjYTNlMzg2ZjE2ZDI1ODQwNDJkIiwiaWF0IjoxNjk2MTM4NTU3fQ.XPMoRu0FYc1Zklr7PXzsbRNV3qiCgzkv86oLbhpFjCY
+
+mybatis:
+  type-aliases-package: com.shinhan.walfi.dao
+  mapper-locations: classpath:mapper/*.xml
 
 logging:
   level:
     org.hibernate.SQL: debug
+server:
+  servlet:
+    encoding:
+      force-response: true
+      force-request: true
+      force: true
+  port: 8094

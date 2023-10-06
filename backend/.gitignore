@@ -26,6 +26,9 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+### Postman Test 용
+src/main/java/com/shinhan/walfi/controller/RequestTestController.java
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

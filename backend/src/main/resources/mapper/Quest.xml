@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shinhan.walfi.mapper.QuestMapper">
+
+    <select id="readRandomDailyQuestByLimit" parameterType="int">
+        SELECT q.quest_idx   AS `idx`,
+               q.quest_type  AS `type`,
+               q.quest_title AS `title`,
+               q.quest_total AS `total`
+        FROM quest q
+        ORDER BY rand()
+            LIMIT #{limit};
+    </select>
+
+    <update id="initializeDailyQuest">
+        UPDATE quest_manager
+        SET count  = 0,
+            status = FALSE;
+    </update>
+
+    <select id="getUserDailyQuest" parameterType="String" resultType="com.shinhan.walfi.dao.DailyQuestDao">
+        SELECT qm.quest_id   AS `idx`,
+               q.quest_type  AS `type`,
+               q.quest_title AS `title`,
+               qm.count      AS `count`,
+               q.quest_total AS `total`,
+               qm.status     AS `status`
+        FROM quest_manager qm
+                 LEFT JOIN quest q ON qm.quest_id = q.quest_idx
+        WHERE qm.user_id = #{user_id};
+    </select>
+
+    <update id="increaseSpecificPerformedQuest" parameterType="Map">
+        UPDATE quest_manager
+        SET count = count + 1
+        WHERE user_id = #{user_id}
+          AND quest_id = #{quest_id};
+    </update>
+
+    <!-- 유저가 퀘스트 보상 받을 때 -->
+    <select id="checkQuestIsCompleted" resultType="boolean" parameterType="Map">
+        SELECT IF(qm.status = 1, TRUE, FALSE)
+        FROM quest_manager qm
+        WHERE qm.user_id = #{user_id}
+          AND qm.quest_id = #{quest_id};
+    </select>
+
+    <!-- 유저가 퀘스트 수행할 때 -->
+    <select id="checkIFQuestIsComplete" resultType="boolean" parameterType="Map">
+        SELECT IF(qm.count = q.quest_total, TRUE, FALSE)
+        FROM quest_manager qm
+                 LEFT JOIN quest q ON qm.quest_id = q.quest_idx
+        WHERE qm.user_id = #{user_id}
+          AND qm.quest_id = #{quest_id};
+    </select>
+
+    <select id="findUserIdByMainAccount" resultType="String" parameterType="String">
+        SELECT u.user_id
+        FROM `user` u
+        WHERE u.대표계좌 = #{MainAccountNumber};
+    </select>
+
+    <update id="updateQuestStatusTrue">
+        UPDATE quest_manager
+        SET status = TRUE
+        WHERE user_id = #{user_id}
+          AND quest_id = #{quest_id};
+    </update>
+
+    <update id="updateQuestStatus" parameterType="Map">
+        UPDATE quest_manager
+        SET status = #{status}
+        WHERE user_id = #{user_id}
+          AND quest_id = #{quest_id};
+    </update>
+</mapper>
