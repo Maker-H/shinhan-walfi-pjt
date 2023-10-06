@@ -1,7 +1,0 @@
-FROM openjdk:11-jre
-
-COPY walfi-0.0.1-SNAPSHOT.jar app.jar
-
-EXPOSE 8094
-
-CMD ["java", "-jar", "/app.jar"]
